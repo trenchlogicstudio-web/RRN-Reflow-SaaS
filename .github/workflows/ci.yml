@@ -1,0 +1,38 @@
+# RRN SaaS 0.3.2 · Copyright (c) 2026 Miloš Petrović (Trench Logic Studio) · SPDX-License-Identifier: MIT
+#
+# On every push and pull request: the whole suite, then a fresh build of the
+# Worker bundle, which must match dist/ byte for byte. Nothing is installed:
+# there are no dependencies.
+name: Verify
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['22.13.0', '22.x', '24.x', '26.x']
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node }}
+          package-manager-cache: false
+      - run: node --version
+      - run: npm test
+      - run: npm run build
+      - run: git diff --exit-code -- dist

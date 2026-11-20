@@ -1,0 +1,18 @@
+{
+  "name": "rrn-saas",
+  "version": "0.3.2",
+  "private": true,
+  "description": "Reflow SaaS: turn 'fully booked' into an upgraded booking in a quiet hour, at exactly the standard price.",
+  "license": "MIT",
+  "author": "Miloš Petrović (Trench Logic Studio)",
+  "type": "module",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning local.js",
+    "test": "node --disable-warning=ExperimentalWarning --test test/*.test.js",
+    "build": "node build.js",
+    "doctor": "node doctor.js"
+  }
+}

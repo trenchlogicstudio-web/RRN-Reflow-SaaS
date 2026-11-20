@@ -1,0 +1,21 @@
+# Copyright (c) 2026 Miloš Petrović (Trench Logic Studio) · SPDX-License-Identifier: MIT
+# Cloudflare Workers configuration (for the command-line route; the dashboard
+# route in README.md needs no file at all).
+name = "reflow-saas"
+main = "dist/worker.js"
+compatibility_date = "2025-09-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "reflow"
+database_id = "REPLACE-WITH-YOUR-D1-DATABASE-ID"
+
+# Housekeeping and email retries every 15 minutes (the app also runs it on ordinary traffic).
+[triggers]
+crons = ["*/15 * * * *"]
+
+[vars]
+PRODUCT_NAME = "Reflow"
+OPERATOR_NAME = ""
+CONTACT_EMAIL = ""
+# ADMIN_KEY is a secret: set it with `wrangler secret put ADMIN_KEY`, never here.
